@@ -2,10 +2,13 @@
 title: "First Webpage"
 author: "Zoe M."
 date: "2023-01-24"
-output: html_document
+output: 
+  html_document: 
+    highlight: pygments
+    theme: spacelab
 ---
 
-My first webpage posting!
+My first webpage posting! It took me forever to git push. Like a week.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
