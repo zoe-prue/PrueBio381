@@ -3,9 +3,9 @@ title: "First Webpage"
 author: "Zoe M."
 date: "2023-01-24"
 output: 
-  html_document: 
-    highlight: pygments
-    theme: spacelab
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
 ---
 
 My first webpage posting! It took me forever to git push. Like a week >_<
@@ -20,9 +20,31 @@ _italics_
 
 __bold__
 
-Strikethrough ~~nope~~ or --nope--
+Strike through ~~nope~~ or --nope--
 
-quotations "Hey"
+Quotations "Hey"
 
+### This is a list:
 
+* First
+  * Second
+  + Third
+* Fourth
 
+```{r}
+# cannot run r code in here, but can insert code box
+# fencing
+x <- 3+5
+# cannot execute code
+```
+
+```{r}
+
+```
+
+Women  | Men
+------------- | -------------
+Lady Gaga  | My Dad
+Dakota Johnson  | My Uncle
+
+![celebrity](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBY4oMwWmHDWcPjm_Piif7u26CPDLqUI5llA&usqp=CAU)
