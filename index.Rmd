@@ -8,4 +8,4 @@ output:
     highlight: github
 ---
 
-[Homework_3](https://github.com/zoe-prue/PrueBio381/blob/2f0d8a912ad69accc76dac01490f983dc7bf69f1/Homework_3.Rmd)
+[Homework_3](Homework_3.html)
