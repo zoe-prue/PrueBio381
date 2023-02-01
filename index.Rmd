@@ -1,43 +1,11 @@
 ---
 title: "First Webpage"
 author: "Zoe M."
-date: "2023-01-24"
+date: "`r Sys.Date()`"
 output: 
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
 ---
-
-My first webpage posting!! It took me forever to git push. Like a week >_<
-
-## Adding new links is eaasy! the structure is [text](link)
-
-Subscript ~hiya~
-
-Superscript ^yo^
-
-_italics_
-
-__bold__
-
-Strike through ~~nope~~ or --nope--
-
-Quotations "Hey"
-
-### This is a list:
-
-* First
-  * Second
-  + Third
-* Fourth
-
-```{r}
-# cannot run r code in here, but can insert code box
-# fencing
-x <- 3+5
-# cannot execute code
-```
-
-![celebrity](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBY4oMwWmHDWcPjm_Piif7u26CPDLqUI5llA&usqp=CAU)
 
 [Homework_3](https://github.com/zoe-prue/PrueBio381/blob/2f0d8a912ad69accc76dac01490f983dc7bf69f1/Homework_3.Rmd)
