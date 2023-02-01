@@ -8,7 +8,7 @@ output:
     highlight: github
 ---
 
-My first webpage posting! It took me forever to git push. Like a week >_<
+My first webpage posting!! It took me forever to git push. Like a week >_<
 
 ## Adding new links is eaasy! the structure is [text](link)
 
