@@ -38,13 +38,6 @@ x <- 3+5
 # cannot execute code
 ```
 
-```{r}
-
-```
-
-Women  | Men
-------------- | -------------
-Lady Gaga  | My Dad
-Dakota Johnson  | My Uncle
-
 ![celebrity](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBY4oMwWmHDWcPjm_Piif7u26CPDLqUI5llA&usqp=CAU)
+
+[Homework_3](https://github.com/zoe-prue/PrueBio381/blob/2f0d8a912ad69accc76dac01490f983dc7bf69f1/Homework_3.Rmd)
