@@ -8,4 +8,6 @@ output:
     highlight: github
 ---
 
+## Homework #3:
 [Homework_3](Homework_3.html)
+
