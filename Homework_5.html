@@ -362,102 +362,84 @@ v&lt;-1:(n_dims^2)
 nv&lt;-sample(v)
 m&lt;-matrix(data=nv,nrow=n_dims,byrow=TRUE) # matrix generation
 print(m)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-## [1,]   48   28   61   17   39   11   42   15
-## [2,]    9   21   33   38   60   31   20   13
-## [3,]   36   10   30    3   35    1   46   43
-## [4,]   23   47   32   19   45   22    7   24
-## [5,]   58   25   40   57   62   52    6   59
-## [6,]   63   16    2   53   14   56    4   55
-## [7,]   29   44   49   50   34   18   37   54
-## [8,]   27   12   51   64   26   41    5    8</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]   35    2   30   18   15   24
+## [2,]    4   22   13    1   33   21
+## [3,]   27   12    6    5    8   29
+## [4,]   36   28   20   17   19   25
+## [5,]   23   10   16    3   11   14
+## [6,]   32   31   34    7   26    9</code></pre>
 <pre class="r"><code>m_transpose&lt;-t(m) # matrix transposition
 print(m_transpose)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
-## [1,]   48    9   36   23   58   63   29   27
-## [2,]   28   21   10   47   25   16   44   12
-## [3,]   61   33   30   32   40    2   49   51
-## [4,]   17   38    3   19   57   53   50   64
-## [5,]   39   60   35   45   62   14   34   26
-## [6,]   11   31    1   22   52   56   18   41
-## [7,]   42   20   46    7    6    4   37    5
-## [8,]   15   13   43   24   59   55   54    8</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]   35    4   27   36   23   32
+## [2,]    2   22   12   28   10   31
+## [3,]   30   13    6   20   16   34
+## [4,]   18    1    5   17    3    7
+## [5,]   15   33    8   19   11   26
+## [6,]   24   21   29   25   14    9</code></pre>
 <pre class="r"><code>sum(c(m[1,])) # sum of first row elements of matrix</code></pre>
-<pre><code>## [1] 261</code></pre>
+<pre><code>## [1] 124</code></pre>
 <pre class="r"><code>mean(c(m[1,])) # mean of first row elements of matrix</code></pre>
-<pre><code>## [1] 32.625</code></pre>
+<pre><code>## [1] 20.66667</code></pre>
 <pre class="r"><code>sum(c(m[n_dims,])) # sum of last row elements of matrix</code></pre>
-<pre><code>## [1] 234</code></pre>
+<pre><code>## [1] 139</code></pre>
 <pre class="r"><code>mean(c(m[n_dims,])) # mean of last row elements of matrix</code></pre>
-<pre><code>## [1] 29.25</code></pre>
+<pre><code>## [1] 23.16667</code></pre>
 <pre class="r"><code>eigen_type&lt;-eigen(m) # eigenvalues and eigenvectors
 print(eigen(m))</code></pre>
 <pre><code>## eigen() decomposition
 ## $values
-## [1] 259.551161+ 0.00000i -50.338034+ 0.00000i  35.784973+24.80277i
-## [4]  35.784973-24.80277i -13.333034+24.62113i -13.333034-24.62113i
-## [7]  19.054693+ 0.00000i   7.828303+ 0.00000i
+## [1] 109.5096278+0.00000i -25.6485443+0.00000i  15.6727136+5.23889i
+## [4]  15.6727136-5.23889i -16.0234269+0.00000i   0.8169163+0.00000i
 ## 
 ## $vectors
-##               [,1]          [,2]                    [,3]
-## [1,] -0.3571661+0i  0.1832174+0i  0.48913799+0.00000000i
-## [2,] -0.3155664+0i  0.4569921+0i -0.42428439+0.13689573i
-## [3,] -0.2868170+0i -0.2462849+0i  0.36823083+0.03279980i
-## [4,] -0.2963275+0i -0.2463434+0i -0.30996116+0.09150271i
-## [5,] -0.4791586+0i -0.1426718+0i -0.20245656-0.27196466i
-## [6,] -0.3373327+0i -0.3527836+0i -0.02166747-0.14666472i
-## [7,] -0.4118435+0i -0.2807657+0i -0.06758085+0.42044312i
-## [8,] -0.2996245+0i  0.6423452+0i -0.02100452-0.04640771i
-##                         [,4]                    [,5]                    [,6]
-## [1,]  0.48913799+0.00000000i -0.25487958+0.03313883i -0.25487958-0.03313883i
-## [2,] -0.42428439-0.13689573i -0.17614628-0.29271461i -0.17614628+0.29271461i
-## [3,]  0.36823083-0.03279980i  0.16035258-0.27656007i  0.16035258+0.27656007i
-## [4,] -0.30996116-0.09150271i -0.44921324+0.21014236i -0.44921324-0.21014236i
-## [5,] -0.20245656+0.27196466i  0.09603792-0.00684351i  0.09603792+0.00684351i
-## [6,] -0.02166747+0.14666472i  0.58073085+0.00000000i  0.58073085+0.00000000i
-## [7,] -0.06758085-0.42044312i  0.17757452+0.28614218i  0.17757452-0.28614218i
-## [8,] -0.02100452+0.04640771i  0.00081254+0.09565006i  0.00081254-0.09565006i
-##                [,7]           [,8]
-## [1,]  0.39060046+0i -0.35179982+0i
-## [2,] -0.17991397+0i -0.07351593+0i
-## [3,]  0.11531675+0i  0.23408982+0i
-## [4,]  0.08229148+0i -0.36405913+0i
-## [5,]  0.35114535+0i -0.31183672+0i
-## [6,] -0.66515139+0i  0.70010291+0i
-## [7,] -0.47086185+0i  0.22166232+0i
-## [8,] -0.08690277+0i  0.21673668+0i</code></pre>
+##               [,1]           [,2]                      [,3]
+## [1,] -0.4766254+0i  0.05213040+0i  0.515733925-0.004649278i
+## [2,] -0.2939948+0i -0.16415781+0i -0.654666017+0.000000000i
+## [3,] -0.3356690+0i -0.65048938+0i  0.004085474+0.000995013i
+## [4,] -0.5296814+0i -0.07185214+0i -0.390778586+0.253714422i
+## [5,] -0.2778235+0i  0.02081550+0i  0.197447261-0.105580664i
+## [6,] -0.4647294+0i  0.73593626+0i -0.195179451-0.009219602i
+##                           [,4]          [,5]           [,6]
+## [1,]  0.515733925+0.004649278i  0.5770229+0i -0.44668557+0i
+## [2,] -0.654666017+0.000000000i  0.3788757+0i  0.29550709+0i
+## [3,]  0.004085474-0.000995013i -0.5600548+0i  0.50504215+0i
+## [4,] -0.390778586-0.253714422i -0.3941439+0i -0.04352219+0i
+## [5,]  0.197447261+0.105580664i -0.1773125+0i -0.56686639+0i
+## [6,] -0.195179451+0.009219602i -0.1518132+0i  0.36721696+0i</code></pre>
 <pre class="r"><code># lambda*v = A*v
 # eigenvalue (lambda)
 # eigenector (v)
-typeof(eigen_type$values)</code></pre>
+typeof(eigen_type$values) # complex because they are imaginary numbers</code></pre>
 <pre><code>## [1] &quot;complex&quot;</code></pre>
-<pre class="r"><code>typeof(eigen_type$vectors)</code></pre>
+<pre class="r"><code>typeof(eigen_type$vectors) # complex because they are imaginary numbers</code></pre>
 <pre><code>## [1] &quot;complex&quot;</code></pre>
 </div>
 <div id="problem-2" class="section level2">
 <h2>Problem #2:</h2>
 <pre class="r"><code>my_matrix&lt;-matrix(data=runif(16),nrow=4, ncol=4,byrow=TRUE) # matrix generation
 my_matrix</code></pre>
-<pre><code>##            [,1]       [,2]      [,3]      [,4]
-## [1,] 0.40120352 0.94930622 0.7094994 0.3907789
-## [2,] 0.97858247 0.55088989 0.9799637 0.9946737
-## [3,] 0.13391417 0.08958204 0.8702700 0.2974224
-## [4,] 0.09517446 0.71686383 0.4011409 0.9253501</code></pre>
+<pre><code>##            [,1]       [,2]      [,3]       [,4]
+## [1,] 0.80761001 0.09877779 0.1404034 0.06373075
+## [2,] 0.02686807 0.91866067 0.9270780 0.47981788
+## [3,] 0.17425404 0.66967253 0.1742429 0.04428903
+## [4,] 0.42166759 0.16572126 0.1517650 0.82399460</code></pre>
 <pre class="r"><code>my_logical&lt;-runif(100)&lt;0.5
 my_logical</code></pre>
-<pre><code>##   [1] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE
-##  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
-##  [25]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE
-##  [37]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
-##  [49]  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61]  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
-##  [73] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
-##  [85]  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-##  [97] FALSE  TRUE  TRUE  TRUE</code></pre>
+<pre><code>##   [1] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+##  [13] FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+##  [25]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [37] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+##  [49] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+##  [61] FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+##  [85] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+##  [97] FALSE  TRUE  TRUE FALSE</code></pre>
 <pre class="r"><code>my_letters&lt;-sample(letters, 26, replace=FALSE)
 my_letters</code></pre>
-<pre><code>##  [1] &quot;p&quot; &quot;s&quot; &quot;n&quot; &quot;d&quot; &quot;v&quot; &quot;o&quot; &quot;r&quot; &quot;u&quot; &quot;t&quot; &quot;x&quot; &quot;m&quot; &quot;f&quot; &quot;k&quot; &quot;a&quot; &quot;b&quot; &quot;e&quot; &quot;h&quot; &quot;c&quot; &quot;l&quot;
-## [20] &quot;w&quot; &quot;z&quot; &quot;g&quot; &quot;q&quot; &quot;y&quot; &quot;j&quot; &quot;i&quot;</code></pre>
+<pre><code>##  [1] &quot;s&quot; &quot;d&quot; &quot;z&quot; &quot;g&quot; &quot;q&quot; &quot;u&quot; &quot;w&quot; &quot;k&quot; &quot;j&quot; &quot;o&quot; &quot;v&quot; &quot;y&quot; &quot;a&quot; &quot;h&quot; &quot;c&quot; &quot;e&quot; &quot;x&quot; &quot;n&quot; &quot;b&quot;
+## [20] &quot;f&quot; &quot;l&quot; &quot;m&quot; &quot;t&quot; &quot;r&quot; &quot;p&quot; &quot;i&quot;</code></pre>
 <pre class="r"><code>new_list&lt;-list(my_matrix[2,2], my_logical[2], my_letters[2])
 typeof(new_list[[1]]) # double</code></pre>
 <pre><code>## [1] &quot;double&quot;</code></pre>
@@ -477,65 +459,65 @@ d_frame &lt;- data.frame(my_unis,my_letters,stringsAsFactors=FALSE)
 d_frame[sample(1:26,4, replace=FALSE),1]&lt;-NA # replace values of 4 randoms rows from my_unis with NA
 print(d_frame)</code></pre>
 <pre><code>##      my_unis my_letters
-## 1  7.6505054          Q
-## 2  4.4588407          N
-## 3  5.2409462          I
-## 4  5.0476423          C
-## 5  3.4540619          W
-## 6  9.3230828          B
-## 7  8.2591934          G
-## 8  8.3452343          O
-## 9  9.7584422          T
-## 10 2.8288987          U
-## 11        NA          V
-## 12 4.3079314          X
-## 13        NA          R
-## 14 3.8026047          Z
-## 15 3.7997264          J
-## 16 1.9786260          E
-## 17 3.6753474          A
-## 18 2.2949226          F
-## 19 1.2516739          H
-## 20        NA          D
-## 21        NA          L
-## 22 8.3367838          P
-## 23 3.6944756          M
-## 24 2.1785805          K
-## 25 0.3980163          S
-## 26 5.1737775          Y</code></pre>
+## 1  3.7957360          M
+## 2  8.8766080          A
+## 3  2.6508414          O
+## 4  7.0428834          S
+## 5  7.9197367          L
+## 6  8.8728574          H
+## 7  5.3304539          X
+## 8  1.2304121          T
+## 9  8.8352667          U
+## 10 6.8660040          Y
+## 11 3.2245741          Z
+## 12 7.1386424          I
+## 13 1.4547957          W
+## 14 2.4366619          F
+## 15 3.6632088          G
+## 16 2.1556838          J
+## 17        NA          V
+## 18        NA          Q
+## 19 2.4817191          P
+## 20 1.0490827          K
+## 21        NA          N
+## 22        NA          B
+## 23 3.4417567          C
+## 24 8.0949614          D
+## 25 8.0214909          R
+## 26 0.2153009          E</code></pre>
 <pre class="r"><code>which(!complete.cases(d_frame)) # find NA slots, give positions</code></pre>
-<pre><code>## [1] 11 13 20 21</code></pre>
+<pre><code>## [1] 17 18 21 22</code></pre>
 <pre class="r"><code>d_frame2 &lt;- d_frame[order(d_frame$my_letters),] # use order() function to reorder my_letters alphabetically
 d_frame2</code></pre>
 <pre><code>##      my_unis my_letters
-## 17 3.6753474          A
-## 6  9.3230828          B
-## 4  5.0476423          C
-## 20        NA          D
-## 16 1.9786260          E
-## 18 2.2949226          F
-## 7  8.2591934          G
-## 19 1.2516739          H
-## 3  5.2409462          I
-## 15 3.7997264          J
-## 24 2.1785805          K
-## 21        NA          L
-## 23 3.6944756          M
-## 2  4.4588407          N
-## 8  8.3452343          O
-## 22 8.3367838          P
-## 1  7.6505054          Q
-## 13        NA          R
-## 25 0.3980163          S
-## 9  9.7584422          T
-## 10 2.8288987          U
-## 11        NA          V
-## 5  3.4540619          W
-## 12 4.3079314          X
-## 26 5.1737775          Y
-## 14 3.8026047          Z</code></pre>
+## 2  8.8766080          A
+## 22        NA          B
+## 23 3.4417567          C
+## 24 8.0949614          D
+## 26 0.2153009          E
+## 14 2.4366619          F
+## 15 3.6632088          G
+## 6  8.8728574          H
+## 12 7.1386424          I
+## 16 2.1556838          J
+## 20 1.0490827          K
+## 5  7.9197367          L
+## 1  3.7957360          M
+## 21        NA          N
+## 3  2.6508414          O
+## 19 2.4817191          P
+## 18        NA          Q
+## 25 8.0214909          R
+## 4  7.0428834          S
+## 8  1.2304121          T
+## 9  8.8352667          U
+## 17        NA          V
+## 13 1.4547957          W
+## 7  5.3304539          X
+## 10 6.8660040          Y
+## 11 3.2245741          Z</code></pre>
 <pre class="r"><code>mean(d_frame2[,1], na.rm=TRUE) # calculate mean of first column # (my_letters)</code></pre>
-<pre><code>## [1] 4.784514</code></pre>
+<pre><code>## [1] 4.763576</code></pre>
 </div>
 
 

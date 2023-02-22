@@ -374,15 +374,10 @@ print(z)</code></pre>
 <h2>Problem 2:</h2>
 <pre class="r"><code>c(seq(8),seq(7,1))</code></pre>
 <pre><code>##  [1] 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1</code></pre>
-<pre class="r"><code># output: 1 2 3 4 5 6 7 8 7 6 5 4 3 2 1
-
-rep(1:5, c(1,2,3,4,5))</code></pre>
+<pre class="r"><code>rep(1:5, c(1,2,3,4,5))</code></pre>
 <pre><code>##  [1] 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5</code></pre>
-<pre class="r"><code># output: 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5
-
-rep(5:1, c(1,2,3,4,5))</code></pre>
+<pre class="r"><code>rep(5:1, c(1,2,3,4,5))</code></pre>
 <pre><code>##  [1] 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
-<pre class="r"><code># output: 5 4 4 3 3 3 2 2 2 2 1 1 1 1 1</code></pre>
 </div>
 <div id="problem-3" class="section level2">
 <h2>Problem 3:</h2>
@@ -393,8 +388,8 @@ x&lt;-v[2]
 
 r&lt;-sqrt(((x^2)+(y^2)))
 theta&lt;-atan(y/x)
-# print(c(r,theta))
-# output: 0.9351795 1.2829248</code></pre>
+print(c(r,theta))</code></pre>
+<pre><code>## [1] 0.9351795 1.2829248</code></pre>
 </div>
 <div id="problem-4" class="section level2">
 <h2>Problem 4:</h2>
@@ -417,7 +412,6 @@ v&lt;-which(v%%2!=0 &amp; v%%3!=0 &amp; v%%7!=0)
 print(v)</code></pre>
 <pre><code>##  [1]  1  5 11 13 17 19 23 25 29 31 37 41 43 47 53 55 59 61 65 67 71 73 79 83 85
 ## [26] 89 95 97</code></pre>
-<pre class="r"><code># output: 1  5 11 13 17 19 23 25 29 31 37 41 43 47 53 55 59 61 65 67 71 73 79 83 85 89 95 97</code></pre>
 </div>
 
 
