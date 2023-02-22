@@ -5,11 +5,11 @@ date: "2023-02-15"
 output: 
   html_document: 
     highlight: textmate
-    theme: simplex
+    theme: cerulean
 ---
 
 ## Problem #1:
-```
+```{r,eval=FALSE}
 n_dims<-sample(3:10, 1)
 v<-1:(n_dims^2)
 nv<-sample(v)
@@ -31,7 +31,7 @@ typeof(eigen_m$vectors)
 ```
 
 ## Problem #2:
-```
+```{r,eval=FALSE}
 my_matrix<-matrix(data=runif(16),nrow=4, ncol=4,byrow=TRUE) # matrix generation
 my_matrix
 my_logical<-runif(100)<0.5
@@ -47,7 +47,7 @@ typeof(new_vec) # data is type character
 ```
 
 ## Problem #3:
-```
+```{r,eval=FALSE}
 my_unis <- runif(26, min=0, max=10)
 my_letters <- sample(LETTERS, 26, replace=FALSE)
 d_frame <- data.frame(my_unis,my_letters,stringsAsFactors=FALSE)
