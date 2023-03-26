@@ -12,11 +12,14 @@ output:
 # Library Calls:
 library(tidyverse)
 library(dplyr)
-data("iris")
 ```
 
 ## Problem #1:
 
+```{r, echo=TRUE}
+data("iris")
+class(iris)
+```
 The data set iris has 150 observations of 5 variables.
 
 ## Problem #2:
@@ -58,7 +61,7 @@ Create an iris4 data frame from iris3 that creates a column with a sepal area (l
 
 ```{r, echo=TRUE}
 # using mutate() to add a new column, fill column with calculated sepal areas for each observation
-iris4<-mutate(iris3, Sepal.Area=Sepal.Length/Sepal.Width)
+iris4<-mutate(iris3, Sepal.Area=(Sepal.Length*Sepal.Width))
 print(iris4)
 ```
 
@@ -119,6 +122,5 @@ iris_longer<-iris%>%
   pivot_longer(cols=Sepal.Length:Petal.Width, names_to="Measure", values_to="Value", values_drop_na=T)
 print(iris_longer)
 ```
-
 
 

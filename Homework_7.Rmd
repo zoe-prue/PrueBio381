@@ -1,0 +1,182 @@
+---
+title: "Homework_7"
+author: "Zoe M."
+date: "2023-03-08"
+output: 
+  html_document: 
+    highlight: textmate
+    theme: cerulean
+---
+
+# Problems #1 and #2:
+
+## Simulating and fitting data distributions
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+### Library calls
+```{r, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+```
+
+### Read in data vector
+
+```{r, eval=FALSE, echo=TRUE}
+# Random data frame for Problem #1
+z <- rnorm(n=3000,mean=0.2) # generating a random data vector with normal distribution
+z <- data.frame(1:3000,z) # adding ID numbers 1:3000; creating new data frame "z" from data vector "z"
+names(z) <- list("ID","Length") # adding column names to data frame "z"
+z <- z[z$Length>0,] # subsetting only positive Length values
+str(z) # display "z"
+summary(z$Length) # summary of numbers in Length column 
+```
+
+```{r}
+# Data frame for Problem #2
+z <- read.table("Sunflower_Ovary_Measurements.csv",header=TRUE,sep=",")
+str(z)
+summary(z$Length) # summary stats of Length column of data frame
+```
+
+### Plot histogram of data
+
+```{r}
+# histogram of z$Length
+p1 <- ggplot(data=z, aes(x=Length, y=..density..)) +
+  geom_histogram(color="grey60",fill="beige",linewidth=0.2) 
+# x-axis is Length values, y-axis is probability density (area under histogram = 1.0)
+print(p1)
+```
+
+### Add empirical density curve
+
+```{r}
+# empirical curve fit to data
+# does not assume probability distribution
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+```
+
+### Get maximum likelihood parameters for normal
+
+```{r}
+# mean and variance are the maximum likelihood estimators of normal probability distribution
+# maximum likelihood estimators = maximize p(data | parameters)
+normPars <- fitdistr(z$Length,"normal") # normal probability fit distribution
+print(normPars)
+str(normPars)
+# general structure of finding max likelihood estimator
+# data.frame$estimate["parameter"]
+normPars$estimate["mean"] 
+```
+
+### Plot normal probability density
+
+```{r}
+# plotting normal probability distribution, using the maximum likelihood estimators, mean and sd
+meanML <- normPars$estimate["mean"] # maximum likelihood estimator
+sdML <- normPars$estimate["sd"] # maximum likelihood estimator
+
+xval <- seq(0,max(z$Length),len=length(z$Length)) # generate x-axis value length of z$Length
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="orange", n = length(z$Length), args = list(mean = meanML, sd = sdML)) # plot of normal probability density with max likelihood estimators
+ p1 + stat
+```
+
+### Plot exponential probability density
+
+```{r}
+# plotting exponential probability distribution, using the maximum likelihood estimator, rate
+expoPars <- fitdistr(z$Length,"exponential") # exponential probability fit distribution
+rateML <- expoPars$estimate["rate"] # maximum likelihood estimator
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$Length), args = list(rate=rateML)) # plot of exponential probability density with max likelihood estimators
+ p1 + stat + stat2
+```
+
+### Plot uniform probability density
+
+```{r}
+# plotting uniform probability distribution
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$Length), args = list(min=min(z$Length), max=max(z$Length)))
+ p1 + stat + stat2 + stat3
+# poor line fit to data
+```
+
+### Plot gamma probability density
+
+```{r, warning=FALSE}
+# plotting gamma probability distribution, using the maximum likelihood estimators, rate and shape
+gammaPars <- fitdistr(z$Length,"gamma") # gamma probability fit distribution
+shapeML <- gammaPars$estimate["shape"] # maximum likelihood estimator
+rateML <- gammaPars$estimate["rate"] # maximum likelihood estimator
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$Length), args = list(shape=shapeML, rate=rateML)) # plot of gamma probability density with max likelihood estimators
+ p1 + stat + stat2 + stat3 + stat4
+```
+
+### Plot beta probability density
+
+```{r, warning=FALSE}
+# beta gives (p | successes, fails)
+# re-scaled for values to be between 0 and 1
+pSpecial <- ggplot(data=z, aes(x=Length/(max(Length + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="beige",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+# plotting beta probability distribution, using the maximum likelihood estimators, shape1 and shape2
+betaPars <- fitdistr(x=z$Length/max(z$Length + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"] # maximum likelihood estimator # number of successes + 1
+shape2ML <- betaPars$estimate["shape2"] # maximum likelihood estimator # number of failures + 2
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$Length), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+# Problem #3:
+
+## Find best-fitting distribution
+
+The beta probability distribution is the best fit for the data. This could be because the beta distribution assumes that the largest data point is the upper bound, and the rest of the graph is scaled to that. With a larger data set, the gamma curve might be a better fit.
+
+# Problem #4:
+
+```{r}
+d <- rbeta(1:77, shape1ML, shape1ML)
+d <- data.frame(1:77,d) # adding ID numbers 1:77 creating new data frame "d" from data vector "d"
+names(d) <- list("ID","myLength") # adding column names to data frame "d"
+# d <- d[d$myLength>0,] # subsetting only positive Length values
+str(d) # display "z"
+summary(d$myLength) # summary of numbers in Length column 
+```
+
+```{r, warning=FALSE}
+# simulating a new data set and plotting beta probability distribution
+
+# plotting beta probability distribution, using the maximum likelihood estimators, shape1 and shape2
+betaPars <- fitdistr(x=d$myLength/max(d$myLength + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"] # maximum likelihood estimator # number of successes + 1
+shape2ML <- betaPars$estimate["shape2"] # maximum likelihood estimator # number of failures + 2
+  
+betaPars <- fitdistr(x=d$myLength/max(d$myLength + 0.1),start=list(shape1=1,shape2=2),"beta")
+
+
+beta_plot <- ggplot(data=d, aes(x=myLength, y=..density..)) +
+  geom_histogram(color="black",fill="beige",linewidth=0.2) 
+
+print(beta_plot)
+
+beta_curve <-stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(d$myLength), args = list(shape1=shape1ML,shape2=shape2ML))
+
+beta_plot + beta_curve
+```
+
+
+

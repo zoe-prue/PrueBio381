@@ -100,7 +100,7 @@ library(multicolor)
 
 someone_praise_me <- function(x) {
   animal <- animal <- sample(names(animals), 1)
-  say(paste(praise(template = "You are ${adjective}!"), collapse = "\n"), by = animal, by_color="magenta")
+  say(paste(praise(template = "You are ${adjective}!"), collapse = "\n"), by = animal, by_color="green")
 }
 
 ## Cute Function
