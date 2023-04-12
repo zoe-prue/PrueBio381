@@ -1,0 +1,75 @@
+---
+title: "Homework_8"
+author: "Zoe M."
+date: "2023-03-31"
+output: 
+  html_document: 
+    highlight: textmate
+    theme: cerulean
+---
+
+# Problems #1 and #2:
+
+I help collect data on the morphometry of the parasitoid wasp _Tetrastichus planipennisi_ under different experimental conditions. It would be interesting to study the if there is a relationship between the morphometrics of _T. planipennisi_ wing and body measurements. I hypothesized that there is a positive linear relationship 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+### Initialization 
+```{r, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(MASS)
+morph<-read.csv("Morphometric_Analysis.csv") # reading in data set
+```
+
+I am assuming that the data in both the right wing length and total body length measurements follow a normal distribution. I found the sample sizes, means, and variances for each measurement group. 
+
+### Finding the parameters
+```{r}
+# find mean of each measurement group
+mean_body <- 0.001 #mean(morph$Total_Body_Length, na.rm=TRUE)
+mean_body
+mean_wing <- 10000 #mean(morph$Right_Wing_Length, na.rm=TRUE)
+mean_wing
+
+# find standard deviation of each measurement group
+sd_body<-sd(morph$Total_Body_Length, na.rm=TRUE)
+sd_wing<-sd(morph$Right_Wing_Length, na.rm=TRUE)
+
+# minimum number of observations in each data set
+n=50
+```
+
+# Problem #3:
+
+I then used these parameters to create a randomized data set following a normal distribution.
+
+### Creation of a randomized data set
+```{r}
+# use parameters create new data set of randomized values following a normal distribution
+body_length <- rnorm(n, mean=mean_body, sd=sd_body)
+wing_length <- rnorm(n, mean=mean_wing, sd=sd_wing)
+# organize randomized data into data frame
+rand_data<-data.frame(body_length, wing_length)
+```
+
+# Problem #4-5:
+
+Analysis and plotting of the data.
+
+```{r}
+plot(rand_data)
+linear_reg<-lm(wing_length ~ body_length, data=rand_data) 
+linear_reg
+abline(linear_reg)
+summary(linear_reg)
+# able to run a few different times to get several simulations and plots 
+```
+
+# Problem 6-7: 
+
+Given a sample size of 100, the mean body length needs to be around 0.1, and the mean right wing length needs to be around 100 to yield a p-value < 0.05. Given a sample size of 50 (like the original data set), the mean body length needs to be around 0.001, and the mean right wing length needs to be around 10000 to yield a p-value < 0.05.

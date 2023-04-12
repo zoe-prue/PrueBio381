@@ -1,0 +1,57 @@
+---
+title: "Homework_9"
+author: "Zoe M."
+date: "2023-04-12"
+output: 
+  html_document: 
+    highlight: textmate
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Problem #1-2:
+I used my code from homework 8 but rewrote it following the principles of structured programming. This program works on data about the morphometrics of parasitoid wasps under different experimental conditions. The program utilizes functions that perform the following tasks:
+
+1. Read in the data
+
+2. Clean the data
+
+3. Generate a randomized data set based on the parameters of the original data
+
+4. Create a summary table
+
+5. Plot the data and fit a linear regression model
+
+## Initialization
+```{r, message=FALSE}
+library(tidyverse)
+library(dplyr)
+```
+
+## Load Functions
+```{r}
+source("Homework_9_Functions.R")
+```
+
+## Global Variables
+```{r}
+morph_file<-"Morphometric_Analysis.csv"
+#morph<-data.frame(morph$Total_Body_Length, morph$Right_Wing_Length)
+```
+
+## Program Body
+```{r}
+# chunk separately in R markdown
+morph<-get_data(file_name=morph_file)
+clean_morph<-clean_data(morph)
+random_morph<-random_data(clean_morph, n=34)
+summary_table<-summary_table(random_morph)
+print(summary_table)
+morph_plot<-plot_data(random_data=random_morph, xlab="Total Body Length", ylab="Right Wing Length")
+```
+

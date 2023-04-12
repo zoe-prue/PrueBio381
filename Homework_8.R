@@ -5,7 +5,6 @@
 # Sample data and summary
 
 morph<-read.csv("Morphometric_Analysis.csv")
-filt<-filter(morph, )
 summary(morph)
 mean_body <- mean(morph$Total_Body_Length, na.rm=TRUE)
 mean_wing <- mean(morph$Right_Wing_Length, na.rm=TRUE)
