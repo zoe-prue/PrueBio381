@@ -8,6 +8,8 @@ output:
     theme: cerulean
 ---
 
+This is a program to batch process multiple data sets. The data set came in one .csv file, so I separated it into 7 different files by year. Next, I batch processed the 7 files, performed a linear regression analysis, and recorded summary statistics for each year (p-value, slope, r^2) in a table.
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(warning = FALSE)
@@ -26,7 +28,7 @@ library(tidyverse)
 source("Reg_Stats_Fun.R")
 ```
 
-# Program Body:
+# File Preparation:
 ```{r}
 # Data set from panel study of income dynamics
 x<-read.csv("batch_data_example.csv")
@@ -44,7 +46,10 @@ write.csv(y,
           col.names=TRUE, 
           row.names=FALSE)
 }
+```
 
+# Batch Processing:
+```{r}
 # Create data frame to hold file summary statistics
 ID <- 1:7 # consecutive unique integer for every file
 year <- c("1976", "1977", "1978", "1979", "1980", "1981", "1982")

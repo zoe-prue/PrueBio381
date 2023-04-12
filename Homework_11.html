@@ -355,6 +355,11 @@ display: none;
 </div>
 
 
+<p>This is a program to batch process multiple data sets. The data set
+came in one .csv file, so I separated it into 7 different files by year.
+Next, I batch processed the 7 files, performed a linear regression
+analysis, and recorded summary statistics for each year (p-value, slope,
+r^2) in a table.</p>
 <div id="initialization" class="section level1">
 <h1>Initialization:</h1>
 <pre class="r"><code>library(dplyr)
@@ -365,8 +370,8 @@ library(tidyverse)</code></pre>
 <h1>Sourcing:</h1>
 <pre class="r"><code>source(&quot;Reg_Stats_Fun.R&quot;)</code></pre>
 </div>
-<div id="program-body" class="section level1">
-<h1>Program Body:</h1>
+<div id="file-preparation" class="section level1">
+<h1>File Preparation:</h1>
 <pre class="r"><code># Data set from panel study of income dynamics
 x&lt;-read.csv(&quot;batch_data_example.csv&quot;)
 x&lt;-arrange(x, year, by=year)
@@ -382,9 +387,11 @@ write.csv(y,
           sep=&quot;,&quot;, 
           col.names=TRUE, 
           row.names=FALSE)
-}
-
-# Create data frame to hold file summary statistics
+}</code></pre>
+</div>
+<div id="batch-processing" class="section level1">
+<h1>Batch Processing:</h1>
+<pre class="r"><code># Create data frame to hold file summary statistics
 ID &lt;- 1:7 # consecutive unique integer for every file
 year &lt;- c(&quot;1976&quot;, &quot;1977&quot;, &quot;1978&quot;, &quot;1979&quot;, &quot;1980&quot;, &quot;1981&quot;, &quot;1982&quot;)
 slope &lt;- rep(NA,length(year)) # put in NAs for slope,
