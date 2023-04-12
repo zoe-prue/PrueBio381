@@ -93,10 +93,10 @@ print(d_new)
 #How do the distributions of reshuffled means compare to the original means?
 
 library(ggplot2)
-qplot(data=d_new, x=x_mean)
+# qplot(data=d_new, x=x_mean)
 ggplot(d_new, aes(x=x_mean)) + geom_histogram()
-?ggplot()
-?qplot()
-?geom_histogram()
+# ?ggplot()
+# ?qplot()
+# ?geom_histogram()
 
 
