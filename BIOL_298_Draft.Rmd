@@ -1,0 +1,351 @@
+---
+title: Exploration of Tetrastichus planipennisi Morphometrics in Vermont
+author: "Zoe Prue"
+date: "May 2023"
+output:
+  word_document: default
+  pdf_document: default
+linestretch: 2
+decription: Paper
+---
+
+\newpage
+
+# Abstract #
+
+Emerald ash borers (Agrilus planipennis) is a species of native to Northern Asia and highly invasive outside of its native regions. In North America, these beetles are highly invasive and cause mass destruction of ash tree forests. Tetrastichus planipennisi, a parasite of A. planipennis, has achieved success as a biological control against these infestations. Our research team at the University of Vermont sought to examine the changes in T. planipennisi morphlogical characteristics in covered and uncovered conditions while overwintering in the Jericho Research Forest in Vermont, USA. The wasp larvae (graciously received from the USDA-ARS BIIRU Laboratory) were reared in open air jars containing ash tree branches throughout 5 months of the winter of 2021 to 2022. Adult wasps were collected after the experiment and classified as being found inside or outside of the ash tree branches. Images of the wasps were taken using Leica Biosystems software and morphometric measurements were obtained using ImageJ software. The data were visualized using R studio version 4.2.1 to create histograms, box plots, and scatter plots. Analyses of variance found a statistically significant difference in the mean body (p=0.003) and notum (p=0.00216) lengths between covered and uncovered treatment groups, but did not find a significant difference in the mean right wing (p=0.0625) or right hind tibia (p=0.0818) lengths. Analyses of variance did not find a statistically significant difference in the mean right wing (0.0625), body (p=0.003), notum (p=0.00216), or right hind tibia (p=0.0818) lengths between wasps found inside and outside of the branches. Linear regression was used to assess the statistical relationships between body length and right wing (p<0.0001), notum (p<0.0001), and right hind tibia (p<0.0001) lengths. Each regression found a moderate, positive correlation between body length and the other major morphometrics. Our results help us gain a preliminary understanding of the morphological changes T. planipennisi experience in Vermont winters, and help inform further research into the use of the species as a biological control against A. planipennis infestations.
+
+\newpage
+
+# Introduction #
+
+Tetrastichus planipennisi is a species of parasitoid wasp native to Northern Asia. They are a parasitoid of Agrilus planipennis, a beetle known as emerald ash borers (EAB), which are responsible for massive destruction of ash tree (Fraxinus) species outside of its native region (Cappaert et al. 2005). T. planipennisi has gained popularity in research among ecologists in North America and Europe for its prospective role as a crucial biological control against A. planipennis infestation. Our research team at the University of Vermont observed morphological changes in T. planipennisi under different experimental conditions. Open air jars with ash tree branches were placed in the Jericho Research Forest in Vermont, USA, for 5 months of the winter of 2021 to 2022. Half of the treatment groups were covered, and the other half were left uncovered. Upon collection, wasps found inside the logs were separated from those found outside of the branches and preserved. 
+
+Morphometrics were taken and used to analyze the wasps. We examined the relationship between morphology and treatment groups (covered vs. uncovered). Additionally, we explored the relationship between morphology and where the bugs were found on the branches (inside vs. outside of the log). We performed several analyses of variance of the morphometrics between treatment groups, as well as between wasps found inside and outside the branches. The variance in morphologies allows us to make inferences about the adaptive evolution of the species under different conditions. Lastly, we ran linear regressions to see how the sizes of different body parts are related to the total body length.
+
+Our team put forth the null hypothesis that there is no statistically significant difference in the morphometrics (right wing, body, notum, and right hind tibia length) of T. planipennisi in the covered and uncovered treatment groups. Alternatively, we hypothesized that a statistically significant difference exists in the morphometrics between the two treatment groups. We posited that the biological mechanism for such a difference in morphologies would be due to an increased capacity of the uncovered bugs to respond to environmental stimuli such as sunlight and temperature. Analysis of Trilophidia annulata (grasshoppers) in China showed that higher solar radiation and isothermality corresponded to smaller body and wing sizes (Bai et al. 2016). We reasoned that the uncovered wasps should have experienced a higher level of solar radiation and greater temperature fluctuations, and should follow a similar trend.
+
+We put forth a second null hypothesis that there is no statistically significant difference in the morphometrics (right wing, body, notum, and right hind tibia length) of T. planipennisi in wasps found inside and outside of the branches. Alternatively, we hypothesized that a statistically significant difference exists in the morphometrics between the locations of collection. We posited that the biological mechanism behind such a difference would be that the emerged wasps were farther along in their life cycle, and therefore larger (Duan et al. 2014). Study of enclosed and emerged wasps helps us understand what conditions are necessary for successful proliferation of T. planipennisi. 
+
+# Methods #
+
+Covered and uncovered jars containing T. planipennisi larvae within ash tree branches were set out in the Jericho Research Forest in Vermont, USA. The wasps were reared from the USDA-ARS BIIRU Laboratory. The experiment began lasted 5 months, throughout the winter of 2021 to 2022. All of the plots were native ash tree stands. After the elapsed time, the jars were collected and adult wasps found within and emerged from the ash tree branches were collected. Photographs of adult wasps were taken using Leica Biosystems software. The right wings were removed from the wasps, soaked in 95% ethanol for 1 to 4 hours, plated on glass cover slides, and photographed (Schwarzfeld and Sperling 2014). Measurements of the right wing length, right wing width, total body length, notum length, notum width, pronotum length, pronotum width, right hind tibia length, ovipositor length, and head width, length, and height were recorded using ImageJ (Csősz et al. 2020). The impacts of covering treatment as well as the location of collection were studied using the morphometric data. The first null hypothesis was that there was no statistically significant difference in the morphology of wasps in the covered and uncovered treatment groups. The second null hypothesis was that there was no statistically significant difference in the morphology of wasps found inside and outside of the logs. Histograms, box plots, and scatter plots were plotted in R studio version 4.2.1 to visualize the data. Analyses of variance were performed to assess the null hypotheses. Additionally, linear regressions were performed to examine the relationships between the sizes of different body parts.
+
+# Results #
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+library(hrbrthemes)
+library(tidyverse)
+```
+
+```{r}
+# global variables
+# cleaned data with \d*\-\d\(3\)\w#\d*
+m_treat <- read.csv("Morphometric_Covered_Uncovered.csv")
+# cleaned data with \d*\-\d\(\d\)I#\d* or \d*\-\d\(\d\)O#\d*
+m_found <- read.csv("Morphometric_Inside_Out.csv")
+```
+
+```{r}
+# histograms (overlap covered and uncovered)
+h1 <- ggplot(data=m_treat) +
+  aes(x = Right_Wing_Length, fill = X) +
+  geom_histogram(position = "identity", 
+                 alpha = 0.5, 
+                 bins = 50, 
+                 color="grey20") +
+  xlab("Right Wing Length (mm)")+
+  ylab("Count") +
+  ggtitle("Right Wing Length Frequency")
+print(h1)
+```
+> **Figure 1** Overlapping histograms of covered and uncovered T. planipennisi right wing lengths (mm). The minimum value was 0.857701 mm. The maximum value was 3.825232 mm.
+
+```{r}
+h2 <- ggplot(data=m_treat) +
+  aes(x = Total_Body_Length, fill = X) +
+  geom_histogram(position = "identity", 
+                 alpha = 0.5, 
+                 bins = 50,
+                 color="grey20") +
+  xlab("Total Body Length (mm)")+
+  ylab("Count") +
+  ggtitle("Total Body Length Frequency")
+print(h2)
+```
+> **Figure 2** Overlapping histograms of covered and uncovered T. planipennisi total body lengths (mm). The minimum value was 1.676210 mm. The maximum value was 5.181705 mm.
+
+```{r}
+h3 <- ggplot(data=m_treat) +
+  aes(x = Notum_Length, fill = X) +
+  geom_histogram(position = "identity", 
+                 alpha = 0.5, 
+                 bins = 50,
+                 color="grey20") +
+  xlab("Notum Length (mm)")+
+  ylab("Count") +
+  ggtitle("Notum Length Frequency")
+print(h3)
+```
+> **Figure 3** Overlapping histograms of covered and uncovered T. planipennisi notum lengths (mm). The minimum value was 0.539070 mm. The maximum value was 1.420035 mm.
+
+```{r}
+h4 <- ggplot(data=m_treat) +
+  aes(x = Right_Hind_Tibia_Length, fill = X) +
+  geom_histogram(position = "identity", 
+                 alpha = 0.5, 
+                 bins = 50,
+                 color="grey20") +
+  xlab("Right Hind Tibia Length (mm)")+
+  ylab("Count") +
+  ggtitle("Right Hind Tibia Length Frequency")
+print(h4)
+```
+> **Figure 4** Overlapping histograms of covered and uncovered T. planipennisi right hind tibia lengths (mm). The minimum value was 0.356126 mm. The maximum value was 1.370109 mm.
+
+```{r}
+# boxplots and ANOVA (covered vs uncovered)
+g1 <- ggplot(data=m_treat) +
+  aes(x=X,
+      y=Right_Wing_Length,) +
+  xlab("Treatment Group") +
+  ylab("Right Wing Length (mm)")+
+  geom_boxplot(fill= c("#00BFC4", "#F8766D"), 
+               color="black") + 
+  theme(legend.position="none")
+# print(g1)
+
+g2<-ggplot(data=m_treat) +
+  aes(x=X,
+      y=Total_Body_Length,) +
+  xlab("Treatment Group") +
+  ylab("Body Length (mm)")+
+  geom_boxplot(fill= c("#00BFC4", "#F8766D"), color="black") + 
+  theme(legend.position="none")
+# print(g2)
+
+g3<-ggplot(data=m_treat) +
+  aes(x=X,
+      y=Notum_Length,) +
+  xlab("Treatment Group") +
+  ylab("Notum Length (mm)")+
+  geom_boxplot(fill= c("#00BFC4", "#F8766D"), color="black") + 
+  theme(legend.position="none")
+# print(g3)
+
+g4<-ggplot(data=m_treat) +
+  aes(x=X,
+      y=Right_Hind_Tibia_Length,) +
+  xlab("Treatment Group") +
+  ylab("Right Hind Tibia Length (mm)")+
+  geom_boxplot(fill= c("#00BFC4", "#F8766D"), color="black") + 
+  theme(legend.position="none")
+# print(g4)
+
+g_all <- (g1|g2)/(g3|g4) +    
+  plot_annotation(title = "Covered vs. Uncovered Wasp Morphometrics") &
+  theme(plot.title = element_text(hjust = 0.5))
+g_all 
+
+# aov_rwing_treat <- aov(Right_Wing_Length ~ X, m_treat)
+# summary(aov_rwing_treat) # not significant
+# aov_body_treat <- aov(Total_Body_Length ~ X, m_treat)
+# summary(aov_body_treat) # significant
+# aov_notum_treat <- aov(Notum_Length ~ X, m_treat)
+# summary(aov_notum_treat) # significant
+# aov_tibia_treat <- aov(Right_Hind_Tibia_Length ~ X, m_treat)
+# summary(aov_tibia_treat) # not significant
+```
+> **Figure 5** Box plots of T. planipennisi right wing, total body, notum, and right hind tibia lengths (mm) in different treatment groups (covered and uncovered). 
+
+Analyses of variance of mean body measurements between T. planipennisi covered and uncovered treatment groups found a statistically significant difference in the total body lengths (p=0.003) and notum lengths (p=0.00216) between the groups. These analyses did not reveal a statistically significant difference in the right wing lengths (p=0.0625) and right hind tibia lengths (p=0.0818) between the treatment groups.
+
+```{r}
+# boxplots and ANOVA (inside vs outside)
+b1 <- ggplot(data=m_found) +
+  aes(x=ID,
+      y=Right_Wing_Length,) +
+  xlab("Location Collected") +
+  ylab("Right Wing Length (mm)")+
+  geom_boxplot(fill= c("#C77CFF", "#7CAE00"), 
+               color="black") + 
+  theme(legend.position="none")
+# print(b1)
+
+b2<-ggplot(data=m_found) +
+  aes(x=ID,
+      y=Total_Body_Length,) +
+  xlab("Location Collected") +
+  ylab("Body Length (mm)")+
+  geom_boxplot(fill= c("#C77CFF", "#7CAE00"), color="black") + 
+  theme(legend.position="none") 
+# print(b2)
+
+b3<-ggplot(data=m_found) +
+  aes(x=ID,
+      y=Notum_Length,) +
+  xlab("Location Collected") +
+  ylab("Notum Length (mm)")+
+  geom_boxplot(fill= c("#C77CFF", "#7CAE00"), color="black") + 
+  theme(legend.position="none")
+# print(b3)
+
+b4<-ggplot(data=m_found) +
+  aes(x=ID,
+      y=Right_Hind_Tibia_Length,) +
+  xlab("Location Collected") +
+  ylab("Right Hind Tibia Length (mm)")+
+  geom_boxplot(fill= c("#C77CFF", "#7CAE00"), color="black") + 
+  theme(legend.position="none")
+# print(b4)
+
+b_all <- (b1|b2)/(b3|b4) +    
+  plot_annotation(title = "Inside vs. Outside Located Wasp Morphometrics") & 
+  theme(plot.title = element_text(hjust = 0.5))
+b_all 
+
+# aov_rwing_found <- aov(Right_Wing_Length ~ ID, m_found)
+# summary(aov_rwing_found) # not significant
+# aov_body_found <- aov(Total_Body_Length ~ ID, m_found)
+# summary(aov_body_found) # not significant
+# aov_notum_found <- aov(Notum_Length ~ ID, m_found)
+# summary(aov_notum_found) # not significant
+# aov_tibia_found <- aov(Right_Hind_Tibia_Length ~ ID, m_found)
+# summary(aov_tibia_found) # not significant
+```
+> **Figure 6** Box plots of T. planipennisi right wing, total body, notum, and right hind tibia lengths (mm) found inside and outside of the ash tree branches.
+
+Analyses of variance of T. planipennisi mean body measurements among locations of collection (inside vs outside the branches) did not reveal a statistically significant difference in the right wing lengths (p=0.901), total body lengths (p=0.645), notum lengths (p=0.84), or right hind tibia lengths (p=0.275) between the groups.
+
+```{r}
+# scatterplots
+m1 <- ggplot(data=m_treat) + 
+  aes(x=Total_Body_Length,
+      y=Right_Wing_Length,
+      color=X) +
+  ggtitle("Effect of Body Length on Right Wing Length")+ 
+  xlab("Body Length (mm)") +
+  ylab("Right Wing Length (mm)") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",
+              se=F,
+              formula = y ~ x,
+              color="grey20") +
+  annotate("text", x=2.2, y=3.5, label="r = 0.6109") +
+  annotate("text", x=2.2, y=3.3, label="r^2 = 0.3732") +
+  annotate("text", x=2.2, y=3.1, label="p = 3.133e-06")
+m1
+# lm2 <- lm(Right_Wing_Length~Total_Body_Length, data=m_treat)
+# summary(lm1)
+```
+> **Figure 7** Scatterplot of total body length (mm) vs. right wing length (mm) of T. planipennisi. Linear regression line shown in dark grey. Correlation coefficient (r) equals 0.6109. R-squared equals 0.3732. P equals 3.133*10^-6.
+
+```{r}
+m2 <- ggplot(data=m_treat) + 
+  aes(x=Total_Body_Length,
+      y=Notum_Length,
+      color=X) +
+  ggtitle("Effect of Body Length on Notum Length")+ 
+  xlab("Body Length (mm)") +
+  ylab("Notum Length (mm)") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",
+              se=F,
+              formula = y ~ x,
+              color="grey20") +
+  annotate("text", x=2.2, y=1.5, label="r = 0.5560") +
+  annotate("text", x=2.2, y=1.4, label="r^2 = 0.3091") +
+  annotate("text", x=2.2, y=1.3, label="p = 7.342e-05")
+m2
+# lm2 <- lm(Notum_Length~Total_Body_Length, data=m_treat)
+# summary(lm2)
+```
+> **Figure 8** Scatterplot of total body length (mm) vs. notum length (mm) of T. planipennisi. Linear regression line shown in dark grey. Correlation coefficient (r) equals 0.5560.  R-squared equals 0.3091. P equals 7.342*10^-5.
+
+```{r}
+m3 <- ggplot(data=m_treat) + 
+  aes(x=Total_Body_Length,
+      y=Right_Hind_Tibia_Length,
+      color=X) +
+  ggtitle("Effect of Body Length on Right Hind Tibia Length")+ 
+  xlab("Body Length (mm)") +
+  ylab("Right Hind Tibia Length (mm)") +
+  geom_point(size=2) +
+  geom_smooth(method="lm",
+              se=F,
+              formula = y ~ x,
+              color="grey20") +
+  annotate("text", x=2.2, y=1.3, label="r = 0.6692") +
+  annotate("text", x=2.2, y=1.2, label="r^2 = 0.4478") +
+  annotate("text", x=2.2, y=1.1, label="p = 3.173e-08")
+m3
+# lm3 <- lm(Right_Hind_Tibia_Length~Total_Body_Length, data=m_treat)
+# summary(lm3)
+```
+> **Figure 9** Scatterplot of total body length (mm) vs. right hind tibia length (mm) of T. planipennisi. Linear regression line shown in dark grey. Correlation coefficient (r) equals 0.6692. R-squared equals 0.4478. P equals 3.173*10^-8.
+
+\newpage
+
+# Discussion #
+
+In this study, we sought to explore the change in morphologies of T. planipennisi under different experimental conditions after overwintering. Half of the jars were covered, and the other half were left uncovered. Overall, we found that there was a trend of increased body measurements in the uncovered treatment groups when compared to the covered. The notum and total body length measurements showed a significant difference between the two groups. To further our analysis, we explored the relationship between the emergence status of the wasps (collected inside or outside of the ash tree branches) and their morphologies. To our surprise, we found no statistically significant difference in the body measurements between the two emergence states. However, as we will describe alter on, this could be due to a low sample size of unemerged wasps. 
+
+We made the null hypotheses that there are no statistically significant differences in the right wing, body, notum, and right hind tibia lengths of T. planipennisi in the covered and uncovered treatment groups. We reject the null hypotheses for the body and notum measurements. Analyses of variance found a statistically significant difference in the mean body (p=0.003) and notum (p=0.00216) lengths between covered and uncovered treatment groups. However, we do not reject the null hypotheses for the mean right wing and right hind tibia lengths. Analyses of variance did not find a statistically significant difference in the mean right wing (p=0.0625) or right hind tibia (p=0.0818) lengths between covered and uncovered treatment groups.
+
+We also put forth the null hypotheses that there are no statistically significant differences in the right wing, body, notum, and right hind tibia lengths of T. planipennisi found inside and outside of the ash tree branches. We do not reject the null hypotheses for all of the  measurements. Analyses of variance did not find a statistically significant difference in the mean right wing (0.0625), body (p=0.003), notum (p=0.00216), or right hind tibia (p=0.0818) lengths between wasps found inside and outside of the branches.
+
+This means our first biological hypothesis could hold some truth. We originally thought that the covering treatment would limit sunlight and temperature oscillations in the jars, causing body and wing measurements to decrease (Bai et al. 2016). Instead, we found that the covered wasps generally had smaller measurements. The body and notum lengths were significantly smaller than the uncovered counterparts, in alignment with our alternative hypothesis. There is a reasonable explanation for this:  a larger body has a lower surface-to-volume ratio, so heat loss could be minimized when the temperature is lower (Casey 1992). Perhaps in uncovered jars, the wasps experienced a greater demand for the prevention of heat loss and developed larger bodies as a response. The differences in morphometrics were most profound in indicators of organism size (body and notum lengths) (Csősz et al. 2020), as opposed to the wings. The effects of sunlight and temperature may impact the body more significantly than the wings. Further study into the changes in wing shape, size, venetion, etc. induced by the treatment groups should be studied.
+
+Our second biological hypothesis was not supported in any way, but does beg for further examination. We posited that the biological mechanism behind a difference in morphometrics of wasps collected from inside and outside the branches could be due to their differing stages in the T. planipennisi life cycle. While this was not affirmed in any way, the study of unemergence is significant to understanding the T. planipennisi life cycle. A study of another parasitoid of Emerald Ash Borers called Spathius galinae found that the rates of unemergence were much higher (20%) when reared with host larvae in ash tree branches as opposed to (2.1%) tropical tree branches (Duan et al. 2014). The researchers described how the tropical branches were much more hydrated than to the control ash tree branches by the end of the study. This indicates that the actual branch environment can play a large role in the success of wasp larvae hatching and emergence.
+
+Linear regression was used to assess the statistical relationships between body length and the other major measurements. There is a moderate, positive association between body length and right wing length, demonstrated by a correlation coefficient equal to 0.6692. The R-squared found in this study was 0.3732. Therefore, the proportion of variance in the right wing length attributed to body length is 37%. The relationship between body length and right wing length is statistically significant, as exemplified by a p-value equal to 3.133e-06, which is less than 0.05. The second regression performed found a moderate, positive association between body length and notum length, demonstrated by a correlation coefficient equal to 0.5560. The R-squared found in this study was 0.3091. Therefore, the proportion of variance in the notum length attributed to body length is 31%. The relationship between body length and notum length is statistically significant, as exemplified by a p-value equal to 7.342e-05, which is less than 0.05. Finally, the third regression calculated a moderate, positive association between body length and right hind tibia length, demonstrated by a correlation coefficient equal to 0.6692. The R-squared found in this study was 0.4478. Therefore, the proportion of variance in the right hind tibia length attributed to body length is 45%. The relationship between body length and right hind tibia length is statistically significant, as exemplified by a p-value equal to 3.173e-08, which is less than 0.05.
+
+The flaws in this experiment double as opportunity for further study. First, we did not sex the adult wasps upon collection. A study of Leptocybe invasa (eucalyptus gall wasps) found that their sex ratio (p<0.0001) and fecundity (p<0.03) were significantly altered by temperature (Zhu et al. 2014). Given our goal of using T. planipennisi as a biological control agent against Emerald Ash Borer infestation, further study into the effect of temperature on sex allocation of offspring would be valuable. This is especially relevant to Vermont winters, which can be highly variable and liable to unprecedented changes in the face of climate change. Furthermore, the same study concluded that temperature affected L. invasa survivorship at various stages of development (eggs, larva, pupa, and egg-to-adult) differently (p<0.0001). In our study, we could expand our data by comparing survivorship at different stages of T. planipennisi development to the temperature fo the surrounding environment. Then, we could know what temperature encourages the greatest rate of survival of T. planipennisi at different developmental stages. This could inform rearing and life cycle planning in accordance with temperature changes throughout Vermont winters. 
+
+Second, we would like to include analysis of wing landmarks in our study. Presently, we took simple wing width and length measurements. A study of wing venation in four genera of the subfamily Vespinae (with a focus on hornets) concluded that variation in wing venation is a highly accurate indicator evolutionary history (Perrard et al. 2014). Interestingly, the results of this study supported the idea that genetic differences between species has a stronger influence on wing shape and venation than other abiotic or biotic factors (Perrard et al. 2014). Furthermore, a multivariate analysis of the forewings of Polistes dominulus (European paper wasp) revealed that wing shapes significantly changes with geographic conditions (Abbasi et al. 2010). Specifically, morphological changes seemed to be tied to the easiest travel distances on a contour map generated by the research team (Abbasi et al. 2010). Many aspects of geographical variations can contribution to population-by-population, and even individual-by-individual changes in wing structure, shape, and venation. Quantitative and computational analyses should be performed on our T. planipennisi samples to verify the degree of difference or relatedness of the wings of these wasps. In future studies, cross-referencing highly detailed wing morphometrics to geographic information (such as elevation, temperature, humidity, etc.) could elucidate the role of environmental factors in wing morphological changes of T. planipennisi in Vermont.
+
+Finally, we often encountered broken ovipositors when trying to collect morphometrics. The nature of the anatomy of T. planipennisi makes this body part very difficult to preserve and measure since it is quite thin. This is extremely important information to have, since ovipositor length plays a crucial role in the ability of insects to lay eggs successfully. The size and shape of Kradibia tentacularis (pollinator fig wasps) is a direct determinant of their ability to reach fig ovaries and lay eggs (Ghana et al. 2017). In our study, T. planipennisi must be able to lay their eggs in the EAB eggs to proliferate and control EAB infestations. Additionally, a study performed on Pteromalus albipennis (Palaearctic parasitoid wasp) suggests that ovipositor length may be a useful indicator of rapid evolution (rather than a hallmark indicator of phylogenetic relatedness) (Maletti et al. 2020). Novel training and protocol may be necessary to improve upon our methodology and obtain higher quality ovipositor morphometrics.
+
+To conclude, we feel confident that further study into morphological changes of T. planipennisi under these experimental conditions will strengthen our understanding of the species as a biological control agent against EAB infestations. The findings of these preliminary analyses have helped us refine our methodology and inform trends in the data. This has provided us with a roadmap for the next stage of investigation into this crucial area of study.
+
+
+# Acknowledgements #
+
+I want to thank George Ni and Professor Nicholas Gotelli for all of the support they have provided throughout my time with them in classes and research. They go above and beyond to create exceptional education experiences for their students and impart as much knowledge as humanly possible to the next generation of scientists. I would also like to thank Christina Anastasia, my fellow undergraduate researcher, for all the time and dedication she has put into this project. This experience has provided me with invaluable skills and information I will use throughout the rest of my career. 
+
+# Literature Cited # 
+
++ Cappaert, D., D.G. McCullough, T.M. Poland, and N.W. Siegert. 2005. Emerald Ash Borer in North America: A Research and Regulatory Challenge. American Entomologist. **51**: 152-165. [https://doi.org/10.1093/ae/51.3.152]. 
+
++ Bai, Y., J.J. Dong, D.L. Guan, J.Y. Xie, and S.Q. Xu. 2016. Geographic variation in wing size and shape of the grasshopper Trilophidia annulata (Orthoptera: Oedipodidae): morphological trait variations follow an ecogeographical rule. Nature Scientific Reports. **6**: 32680. [https://doi.org/10.1038/srep32680].
+
++ Duan, J.J., T.J. Watt, and K. Larson. 2014. Biology, Life History, and Laboratory Rearing of Spathius galinae (Hymenoptera: Braconidae), a Larval Parasitoid of the Invasive Emerald Ash Borer (Coleoptera: Buprestidae). Journal of Economic Entomology. **107**: 939-946. [https://doi.org/10.1603/EC13552]. 
+
++ Schwarzfeld, M.D., and F.A. Sperling. 2014. Species delimitation using morphology, morphometrics, and molecules: definition of the Ophion scutellaris Thomson species group, with descriptions of six new species (Hymenoptera, Ichneumonidae). ZooKeys. **462**: 59-114. [https://doi.org/10.3897/zookeys.462.8229]. 
+
++ Casey, T.M. 1992. Biophysical Ecology and Heat Exchange in Insects. American Zoologist. **32**: 225-237.  [https://doi.org/10.1093/icb/32.2.225].
+
++ Csősz, S. B. Seifert, I. Mikó, B.E. Boudinot, M.L. Borowiec, B.L. Fisher, M. Prebus, J. Puniamoorthy, J.C. Rakotonirina, N. Rasoamanana, R. Schultz, C. Trietsch, J.M. Ulmer, and Z. Elek. 2020. Insect morphometry is reproducible under average investigation standards. Ecology and Evolution. **11**: 547-559. [https://doi.org/10.1002/ece3.7075]. 
+
++ Zhu, F.L, S.X. Ren, B.L. Qiu, and J.H. Wu. 2014. Effect of temperature on life table parameters of Leptocybe invasa (Hymenoptera: Eulophidae). Austral Entomology. **54**: 71-78. [https://doi.org/10.1111/aen.12094]. 
+
++ Perrard, A., M. Baylac, J.M. Carpenter, and C. Villemant. 2014. Evolution of wing shape in hornets: why is the wing venation efficient for species identification? Journal of Evolutionary Biology. **27**: 2665-2675. [https://doi.org/10.1111/jeb.12523]. 
+
++ Abbasi, R., M. Mashhadikhan, M. Abbasi, and B. Kiabi. 2010. Geometric morphometric study of populations of the social wasp, Polistes dominulus (Christ, 1791) from Zanjan province, north‐west Iran. New Zealand Journal of Zoology. **36**: 41-46. [https://doi.org/10.1080/03014220909510138].
+
++ Ghana, S., N. Suleman and S.G. Compton. 2017. Style length variation in male and female figs: development, inheritance, and control of pollinator oviposition. Entomologia Experimentalis et Applicata. **162**: 41-50. [https://doi.org/10.1111/eea.12533]. 
+
++ Maletti, S., O. Niehuis, C. Mayer, M. Sann, S. Klopfstein, G. Nottebrock, H. Baur, and R.S. Peters. 2020. Phylogeny, taxonomics, and ovipositor length variation of the Pteromalus albipennis species group (Hymenoptera: Chalcidoidea: Pteromalidae: Pteromalinae). Journal of Zoological Systematics and Evolutionary Research. **59**: 349-358. [https://doi.org/10.1111/jzs.12433]. (Maletti et al. 2020)
+
++ R Core Team (2023). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+

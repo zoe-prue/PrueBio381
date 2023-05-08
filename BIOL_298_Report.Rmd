@@ -1,0 +1,156 @@
+---
+title: "BIOL_298_Report"
+author: "Zoe M."
+date: "2023-04-28"
+output: 
+  html_document: 
+    highlight: textmate
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+# Abstract #
+1. Is it 300 words or less?
+2. Complete with Main Idea? Hypothesis?
+3. Major Methods? Major Results?
+4. Hypothesis rejected? Conclusions?
+
+What did i do
+how did i analyze data
+H0 no sig diff b/w outside and inside treatments, covered vs uncovered
+HA
+HB do these insects have a difference in ability to travel, invade, ash trees -> ovipositor length
+
+How did we analyze the data
+findings (P value)
+acceptance/rejection of H0
+Conclusions
+
+# Introduction #
+
+1. Appropriate background information
+
+Tetrastichus planipennisi is a species of parasitoid wasp native to Northern Asia. They are a parasitoid of Emerald Ash Borers (Agrilus planipennis), a beetle responsible for massive destruction of Ash species (Fraxinus spp.) outside of its native region (source). T. planipennisi has gained popularity in research among ecologists in North America and Europe for its prospective role as a crucial biological control against A. planipennis infestation. Researchers at the University of Vermont observed morphological changes in T. planipennisi under different experimental conditions. "Open air jars" with segments of "Ash trees" were placed in "X" locations across Vermont, USA, throughout the timeline "_". Half of the treatment groups were covered, and the other half were left uncovered. Upon collection, wasps and larvae found inside the logs were separated from those found outside of the log. 
+
+Morphometrics were taken and used to analyze the wasps. Researchers examined the relationship between morphology and treatment groups (covered vs. uncovered "jars"). Additionally, researchers explored the relationship between morphology and where the bugs were found on the logs (inside vs. outside of the log). Analysis of variance were performed to evaluate these relationships. Furthermore, the variance in morphologies also allows us to make inferences about the adaptive evolution of the species under different conditions.
+
+Researcher put forth the null hypothesis that there is no statistically significant difference in the morphometrics (right wing, body, notum, and right hind tibia length) of T. planipennisi in the covered and uncovered treatment groups. Alternatively, is was hypothesized that a statistically significant difference exists between the two treatment groups. We posited that the biological mechanism for such a difference in morphologies was due to an increased capacity of the uncovered bugs to respond to enrivonmetal cues (temperature, wind, snow)***robustness? strength? travel? invade? egg lay? mate?
+
+
+2. Research Question
+- what question we studied
+- H0
+- HA
+
+3. Biological Hypothesis
+- good place for research inclusion
+
+# Methods #
+
+1. What did you do?
+
+Covered and uncovered jars containing Ash tree segments were set out in "X" locations across the state of Vermont, USA, from "X to X time frame". After the elapsed time, the jars were collected and materials found inside and outside of the logs were separated. Researchers isolated adult wasps and wasp larvae. Photographs of the adult wasps were taken. The right wings were removed from the wasps, soaked in 95% ethanol for 1-4 hours, plated on glass cover slides, and photographed. Measurements of the right wing length, right wing width, total body length, notum length, notum width, pronotum length, pronotum width, right hind tibia length, ovipositor length, and head width, length, and height were taken using ImageJ.  The impacts of covering treatment as well as the physical location the wasp was found were studied using the morphometric data. The first null hypothesis was that there was no statistically significant difference in the morphology of wasps in the covered and uncovered treatment groups. The second null hypothesis was that there was no statistically significant difference in the morphology of wasps found inside and outside of the logs. Histograms and box plots were plotted in R studio version 4.2.1 to visualize the data. Analysis of variance was performed and resulting p-values were used to assess the null hypotheses.
+
+# Results #
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+library(hrbrthemes)
+```
+
+
+```{r}
+# global variables
+# cleaned data with \d*\-\d\(3\)\w#\d*
+m_treat <- read.csv("Morphometric_Covered_Uncovered.csv")
+# cleaned data with \d*\-\d\(\d\)I#\d* or \d*\-\d\(\d\)O#\d*
+m_found <- read.csv("Morphometric_Inside_Out.csv")
+```
+
+
+```{r}
+# histograms
+h1 <- ggplot(data=m_treat) +
+  aes(x=Right_Wing_Length) + 
+  geom_histogram(fill="#FF61CC",
+                 color="black")+ 
+  xlab("Right Wing Length (mm)")+
+  ylab("Count")
+#print(h1)
+
+h2 <- ggplot(data=m_treat) +
+  aes(x=Total_Body_Length) + 
+  geom_histogram(fill="#FF61CC",
+                 color="black") +
+  xlab("Total Body Length (mm)")+
+  ylab("Count")
+#print(h2)
+
+h3 <- ggplot(data=m_treat) +
+  aes(x=Notum_Length) + 
+  geom_histogram(fill="#FF61CC",
+                 color="black") +
+  xlab("Notum Length (mm)")+
+  ylab("Count")
+#print(h3)
+
+h4 <- ggplot(data=m_treat) +
+  aes(x=Right_Hind_Tibia_Length) + 
+  geom_histogram(fill="#FF61CC",
+                 color="black") +
+  xlab("Right Hind Tibia Length (mm)") +
+  ylab("Count")
+#print(h4)
+
+(h1|h2)/(h3|h4)
+```
+
+
+
+1. Written Results! Not just figures!
+2. Graphs and tables
+- histograms
+- boxplots
+- scatterplots
+3. Figure Captions
+4. Statistics: logrank-test (p-value)
+
+# Discussion #
+
+1. Did you give a quick summary? (Briefly restate the research questions and describe major findings)
+2. Do you reject or do not reject your hypotheses? Why?
+3. What was the biological hypothesis and any alternative hypotheses addressed in your study?
+4. What was the patterns in the data revealed by your statistical test, and how do these patterns support
+or not support the biological hypothesis and its alternatives?
+
+# Reflection #
+
+what can i improve, what did I do well?
+
+# Literature Cited # 
+
++ Flora, S.D., A. Quaglia, C. Bennicelli, and M. Vercelli. 2005. The epidemiological revolution of the 20th century. FASEB Journal. **19**: 892-897.
+
++ Loudon, I. 2000. Maternal mortality in the past and its relevance to developing countries today. The American Journal of Clinical Nutrition. **72**: 241–246.
+
++ Conley, D., and J. Heerwig. 2012. The Long-Term Effects of Military Conscription on Mortality: Estimates From the Vietnam-Era Draft Lottery. Demography. **49**: 841-855.
+
++ R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
+
+Actul sources:
+
+(methods) https://go.gale.com/ps/retrieve.do?tabID=T002&resultListType=RESULT_LIST&searchResultsType=SingleTab&hitCount=1&searchType=AdvancedSearchForm&currentPosition=1&docId=GALE%7CA541260834&docType=Article&sort=RELEVANCE&contentSegment=ZONE-MOD1&prodId=AONE&pageNum=1&contentSet=GALE%7CA541260834&searchId=R1&userGroupName=vol_b92b&inPS=true
+
+(methods) https://onlinelibrary.wiley.com/doi/10.1002/ece3.7075
+
+(methods) https://www.tandfonline.com/doi/abs/10.1080/03014220909510138
+
+
+
