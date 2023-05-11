@@ -3,8 +3,11 @@ title: Exploration of Tetrastichus planipennisi Morphometrics in Vermont
 author: "Zoe Prue"
 date: "May 2023"
 output:
-  word_document: default
+  html_document: 
+    highlight: textmate
+    theme: cerulean
   pdf_document: default
+  word_document: default
 linestretch: 2
 decription: Paper
 ---
